@@ -22,7 +22,7 @@ def island_counter(matrix):
             #reaching a 1
             if not visited[row][col]: #first value height, second value width, because of set-up
                 if matrix[row][col] == 1:
-                    visited = dft(col, y, matrix, visited)
+                    visited = dft(col, row, matrix, visited)
                     island_count += 1
                 else:
                      visited[row][col] = True
@@ -40,3 +40,26 @@ def dft(col, row, matrix, visited):
             for neighbor in get_neighbors((x, y), matrix):
                 s.push(neighbor)
     return visited
+
+def get_neighbors(vertex, graph_matrix):
+    col = vertex[0]
+    row = vertex[1]
+    neighbors = []
+
+    #check north
+    if row > 0 and graph_matrix[row-1][col] == 1:
+        neighbors.append((col, row-1))
+
+    #check south
+    if row <= len(graph_matrix) - 1 and graph_matrix[row + 1][col]== 1:
+        neighbors.append((col, row+1)) 
+    #check east
+    if col <= len(graph_matrix[0]) - 1 and graph_matrix[row][col + 1]== 1:
+        neighbors.append((col+1, row)) 
+    #check west
+    if col > 0 and graph_matrix[row][col - 1]== 1:
+        neighbors.append((col-1, row)) 
+
+    return neighbors
+
+print(island_counter(islands))
