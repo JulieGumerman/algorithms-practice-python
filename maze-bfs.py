@@ -1,4 +1,4 @@
-from util import Queue
+import queue
 
 
 def createMaze():
@@ -52,7 +52,7 @@ def printMaze(maze, path=""):
                 if (j, i) in pos:
                     print("+ ", end="")
                 else:
-                    print(col + " ", end "")
+                    print(col + " ", end="")
             print()
 
 def valid(maze, moves):
@@ -78,3 +78,43 @@ def valid(maze, moves):
         elif (maze[j][i] == "#"):
             return False
     return True
+
+def findEnd(maze, moves):
+    for x, pos in enumerate(maze[0]):
+        if pos == "O":
+            start = x
+    
+    i = start
+    j = 0
+    #i moves you horizontally
+    #j moves you laterally
+    for move in moves:
+        if move == "L":
+            i -= 1
+        elif move == "R":
+            i += 1
+        elif move == "U":
+            j -= 1
+        elif move == "D":
+            j += 1
+
+    if maze[j][i] == "X":
+        print("Found: " + moves)
+        printMaze(maze, moves)
+        return True
+
+    return False
+
+    #main algorithm
+
+nums = queue.Queue()
+nums.put("")
+add = ""
+maze = createMaze2()
+
+while not findEnd(maze, add):
+    add = nums.get()
+    for j in ["L", "R", "U", "D"]:
+        put = add + j
+        if valid(maze, put):
+            nums.put(put)
